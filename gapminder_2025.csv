@@ -1,0 +1,194 @@
+geo,name,gdp,life_exp,world_4region,landlocked,log_gdp
+afg,Afghanistan,2092.54588,69.02,asia,landlocked,3.3206749888695466
+ago,Angola,7457.17479,64.7,africa,coastline,3.872574322712865
+alb,Albania,20361.79277,80,europe,coastline,4.308816013146132
+and,Andorra,67385.01529,84.2,europe,landlocked,4.828563331247572
+are,UAE,72660.14487,80.39,asia,coastline,4.861296259425111
+arg,Argentina,28467.05855,77.9,americas,coastline,4.454342594596898
+arm,Armenia,21539.01147,79.92,europe,landlocked,4.333225767533194
+atg,Antigua and Barbuda,30870.84372,78.1,americas,coastline,4.489548499191617
+aus,Australia,61942.61476,84.2,asia,coastline,4.791989534115236
+aut,Austria,64665.01876,82.2,europe,landlocked,4.810669407902971
+aze,Azerbaijan,23177.53343,72.89,europe,landlocked,4.365067216151387
+bdi,Burundi,848.37448,62.09,africa,landlocked,2.9285875960045034
+bel,Belgium,65096.12262,82.4,europe,coastline,4.8135551210583944
+ben,Benin,4143.14163,66.53,africa,coastline,3.6173297795633528
+bfa,Burkina Faso,2661.1876,68.14,africa,landlocked,3.42507549115154
+bgd,Bangladesh,8950.44644,71.58,asia,coastline,3.951844698063731
+bgr,Bulgaria,36210.72816,76.3,europe,coastline,4.558837258114177
+bhr,Bahrain,60839.23381,77.48,asia,coastline,4.784183736048542
+bhs,Bahamas,37464.41295,73.09,americas,coastline,4.57361893179404
+bih,Bosnia and Herzegovina,21620.74836,78,europe,coastline,4.334870722133187
+blr,Belarus,28456.77856,74.9,europe,landlocked,4.454185734370807
+blz,Belize,13847.69431,75.51,americas,coastline,4.141377467855097
+bol,Bolivia,10089.6259,72.21,americas,landlocked,4.0038750639001774
+bra,Brazil,20500.23168,77.31,americas,coastline,4.3117587691912185
+brb,Barbados,21036.46289,77,americas,coastline,4.322972718538119
+brn,Brunei,82692.81626,78.51,asia,coastline,4.917467782900157
+btn,Bhutan,16920.9576,73.1,asia,landlocked,4.228424937227105
+bwa,Botswana,18189.03301,70.3,africa,landlocked,4.259809611125933
+caf,Central African Republic,1135.80389,55.48,africa,landlocked,3.0553033517595214
+can,Canada,58422.42505,82.2,americas,coastline,4.766579580093449
+che,Switzerland,84310.9311,84.6,europe,landlocked,4.925883885522106
+chl,Chile,31425.36958,81.1,americas,coastline,4.497280393935109
+chn,China,25504.91715,80.51,asia,coastline,4.406623917110245
+civ,Cote d'Ivoire,7143.2159,64.72,africa,coastline,3.8538937766486416
+cmr,Cameroon,5107.23253,62.49,africa,coastline,3.7081856315381145
+cod,"Congo, Dem. Rep.",1565.63762,61.6,africa,landlocked,3.1946912482414858
+cog,"Congo, Rep.",6377.20603,64.09,africa,coastline,3.8046304480750237
+col,Colombia,19301.99344,80.51,americas,coastline,4.285602163685764
+com,Comoros,3717.61456,76.76,africa,coastline,3.570264360384109
+cpv,Cape Verde,10625.35184,76,africa,coastline,4.026343319864994
+cri,Costa Rica,28390.39988,79.79,americas,coastline,4.453171509625342
+cub,Cuba,15295.86616,78.4,americas,coastline,4.184574074838682
+cyp,Cyprus,55720.00354,80.89,europe,coastline,4.746011135343498
+cze,Czech Republic,50179.53386,80.2,europe,landlocked,4.700526622642799
+deu,Germany,64355.00745,81.2,europe,coastline,4.808582344920194
+dji,Djibouti,7352.87525,68.81,africa,coastline,3.8664571977280016
+dma,Dominica,19949.18463,76.53,americas,coastline,4.299925149750673
+dnk,Denmark,77336.97179,81.8,europe,coastline,4.8883871628153965
+dom,Dominican Republic,25662.87388,73.3,americas,coastline,4.409305289620269
+dza,Algeria,16189.46985,76.4,africa,coastline,4.2092326273210485
+ecu,Ecuador,14442.50999,77.1,americas,coastline,4.159642676618531
+egy,Egypt,17541.37397,70.39,africa,coastline,4.244063607514595
+eri,Eritrea,2441.67773,63.45,africa,coastline,3.387688342115522
+esp,Spain,50242.02774,83.5,europe,coastline,4.701067158964042
+est,Estonia,42892.09544,79,europe,coastline,4.632377263674359
+eth,Ethiopia,3106.93422,65.28,africa,coastline,3.4923320584711197
+fin,Finland,57574.23612,82,europe,coastline,4.760228184568191
+fji,Fiji,14765.58232,68,asia,coastline,4.16925057919651
+fra,France,56112.81238,82.9,europe,coastline,4.749062036133615
+fsm,"Micronesia, Fed. Sts.",3967.76263,67.3,asia,coastline,3.5985456827450633
+gab,Gabon,19542.93836,67.39,africa,coastline,4.290989862227924
+gbr,UK,53993.24847,81.3,europe,coastline,4.732339457312974
+geo,Georgia,27204.56113,75,europe,coastline,4.434641724163752
+gha,Ghana,7404.44027,65.8,africa,coastline,3.869492234114744
+gin,Guinea,4320.52378,62.91,africa,coastline,3.6355363998183186
+gmb,Gambia,3199.30847,67.71,africa,coastline,3.5050561157828373
+gnb,Guinea-Bissau,2838.37582,61.49,africa,coastline,3.4530698984316133
+gnq,Equatorial Guinea,14767.56593,61.68,africa,coastline,4.169308918447799
+grc,Greece,39621.40673,81.3,europe,coastline,4.597929890794426
+grd,Grenada,18821.06954,75.5,americas,coastline,4.274644299331517
+gtm,Guatemala,13328.77649,73.5,americas,coastline,4.12479028534567
+guy,Guyana,79370.52198,69.2,americas,coastline,4.899659236451386
+hnd,Honduras,6863.33285,76.41,americas,coastline,3.8365350613142493
+hrv,Croatia,45156.1289,78.9,europe,coastline,4.654716704080458
+hti,Haiti,2808.66975,61.38,americas,coastline,3.4485006768361504
+hun,Hungary,42498.58738,77.1,europe,landlocked,4.628374494679325
+idn,Indonesia,15391.06911,72.81,asia,coastline,4.187268788281579
+ind,India,10607.6231,72.1,asia,coastline,4.025618080395336
+irl,Ireland,119406.2256,82.8,europe,coastline,5.0770269706228435
+irn,Iran,16539.72286,79.21,asia,coastline,4.218528228228554
+irq,Iraq,12554.13117,71.3,asia,coastline,4.098786662000656
+isl,Iceland,67443.7438,83,europe,coastline,4.828941669958224
+isr,Israel,49539.47269,83.7,asia,coastline,4.694951379540047
+ita,Italy,54773.81941,83.3,europe,coastline,4.738573025589239
+jam,Jamaica,10741.48565,76.31,americas,coastline,4.031064352590321
+jor,Jordan,9977.12098,78.8,asia,coastline,3.99900523839331
+jpn,Japan,47815.39888,84.4,asia,coastline,4.679567783047728
+kaz,Kazakhstan,38237.52103,75.2,asia,landlocked,4.582489728847536
+ken,Kenya,6158.76678,70.34,africa,coastline,3.7894937585509143
+kgz,Kyrgyz Republic,7567.34334,75.51,asia,landlocked,3.8789434389080584
+khm,Cambodia,7412.02083,73.41,asia,coastline,3.869936631146232
+kir,Kiribati,3420.85689,71.41,asia,coastline,3.5341349060519627
+kna,St. Kitts and Nevis,32676.06378,75.11,americas,coastline,4.514229735082381
+kor,South Korea,54667.24252,83.6,asia,coastline,4.737727168119642
+kwt,Kuwait,46572.35764,81.5,asia,coastline,4.668128223849096
+lao,Lao,8943.6912,66.58,asia,landlocked,3.951516795858627
+lbn,Lebanon,10819.79651,79.2,asia,coastline,4.034219092987264
+lbr,Liberia,1751.85031,61.8,africa,coastline,3.243496994344422
+lby,Libya,14636.39331,74.05,africa,coastline,4.165434071357589
+lca,St. Lucia,25491.65151,77.72,americas,coastline,4.406397972717035
+lka,Sri Lanka,14379.8147,77,asia,coastline,4.15775328971265
+lso,Lesotho,2716.15309,58.71,africa,landlocked,3.4339542443523987
+ltu,Lithuania,49761.39795,76.9,europe,coastline,4.696892572515619
+lux,Luxembourg,131037.5237,83.5,europe,landlocked,5.117395677352949
+lva,Latvia,40852.07026,76.1,europe,coastline,4.611214070163705
+mar,Morocco,9582.50716,73.39,africa,coastline,3.9814791524291113
+mco,Monaco,475911.3352,80.59,europe,coastline,5.677526048896646
+mda,Moldova,17488.86301,76.32,europe,landlocked,4.242761575943297
+mdg,Madagascar,1720.26523,62.89,africa,coastline,3.2355954114686876
+mdv,Maldives,24629.31592,76.57,asia,coastline,4.391452349464154
+mex,Mexico,22374.76858,76.6,americas,coastline,4.349758552146665
+mhl,Marshall Islands,7990.57932,64.39,asia,coastline,3.902578266968391
+mkd,North Macedonia,26049.02092,77.3,europe,landlocked,4.415791404524902
+mli,Mali,3038.49667,64.13,africa,landlocked,3.4826587647243366
+mlt,Malta,63314.49955,83.3,europe,coastline,4.801503178476418
+mmr,Myanmar,5493.95419,65.79,asia,coastline,3.7398850338407934
+mne,Montenegro,29492.07923,77.4,europe,coastline,4.46970539195782
+mng,Mongolia,18091.8807,73.61,asia,landlocked,4.257483715294171
+moz,Mozambique,1530.91465,65.31,africa,coastline,3.1849509790279322
+mrt,Mauritania,6709.96294,68.5,africa,coastline,3.8267201215105797
+mus,Mauritius,28927.4972,74.19,africa,coastline,4.461310860220767
+mwi,Malawi,1689.43091,62.28,africa,landlocked,3.2277404358153907
+mys,Malaysia,35989.79488,76.7,asia,coastline,4.556179371444854
+nam,Namibia,10740.46072,66.7,africa,coastline,4.031022911145862
+ner,Niger,1870.05045,59.68,africa,landlocked,3.271853323039742
+nga,Nigeria,5848.08157,64.86,africa,coastline,3.7670134216026474
+nic,Nicaragua,8023.40633,77.11,americas,coastline,3.904358786769159
+nld,Netherlands,73384.1408,82.2,europe,coastline,4.865602213768432
+nor,Norway,94895.85433,83.3,europe,coastline,4.977247240025483
+npl,Nepal,5329.63699,74.02,asia,landlocked,3.726697629550257
+nru,Nauru,12938.44098,59.29,asia,coastline,4.1118819490858804
+nzl,New Zealand,49598.26506,81.9,asia,coastline,4.695466485198938
+omn,Oman,37310.77532,77.48,asia,coastline,4.5718342737982445
+pak,Pakistan,5717.17543,70.31,asia,coastline,3.7571815186288324
+pan,Panama,38412.09464,79.6,americas,coastline,4.5844679902109995
+per,Peru,16370.68024,77.5,americas,coastline,4.214066725736957
+phl,Philippines,11116.63775,72.41,asia,coastline,4.045973453844891
+plw,Palau,18884.74308,69.1,asia,coastline,4.276111080786669
+png,Papua New Guinea,4521.77359,66.6,asia,coastline,3.65530881296836
+pol,Poland,47891.51537,79,europe,coastline,4.680258579085142
+prk,North Korea,1542.77448,74,asia,coastline,3.188302446316091
+prt,Portugal,43664.4989,82.3,europe,coastline,4.640128480497844
+pry,Paraguay,17153.71862,73.3,americas,landlocked,4.234358281876436
+pse,Palestine,3909.19827,73.88,asia,coastline,3.59208769790302
+qat,Qatar,116057.3359,81.7,asia,coastline,5.064672597098676
+rou,Romania,42605.11998,76.6,europe,coastline,4.629461792657863
+rus,Russia,40870.61672,73.5,europe,coastline,4.611411191077683
+rwa,Rwanda,3512.30613,65.08,africa,landlocked,3.5455923616690423
+sau,Saudi Arabia,64965.70305,74.97,asia,coastline,4.812684142686753
+sdn,Sudan,1865.51403,69.32,africa,coastline,3.2707985195943063
+sen,Senegal,4871.2802600000005,70.61,africa,coastline,3.6876431166114125
+sgp,Singapore,137905.9791,85.71,asia,coastline,5.139583096007934
+slb,Solomon Islands,2615.32949,63.97,asia,coastline,3.417526410860873
+sle,Sierra Leone,3255.82436,59.28,africa,coastline,3.5126609682256813
+slv,El Salvador,12221.09674,73.51,americas,coastline,4.087110181909574
+smr,San Marino,78126.26324,85.3,europe,landlocked,4.892797052607824
+som,Somalia,1462.56236,65.13,africa,coastline,3.1651143923791865
+srb,Serbia,28758.37917,76.3,europe,landlocked,4.458764405446547
+ssd,South Sudan,716.249,56.69,africa,landlocked,2.855064028630197
+stp,Sao Tome and Principe,5681.95489,70.7,africa,coastline,3.754497781463326
+sur,Suriname,20256.66324,73.4,americas,coastline,4.306567908161344
+svk,Slovak Republic,41977.51553,78.6,europe,landlocked,4.623016730970029
+svn,Slovenia,50558.74404,81.9,europe,coastline,4.703796276839351
+swe,Sweden,65596.66352,83.6,europe,coastline,4.816881750172865
+swz,Eswatini,11069.57117,61.08,africa,landlocked,4.044130796839877
+syc,Seychelles,30802.63006,75.31,africa,coastline,4.48858779999979
+syr,Syria,4085.72011,76.34,asia,coastline,3.6112686122117585
+tcd,Chad,2645.81191,58.32,africa,landlocked,3.4225589670802936
+tgo,Togo,3007.55596,64.91,africa,coastline,3.4782137167743454
+tha,Thailand,22695.94668,77.91,asia,coastline,4.355948302493076
+tjk,Tajikistan,5122.38472,72.1,asia,landlocked,3.7094721933238457
+tkm,Turkmenistan,18623.63459,71.3,asia,landlocked,4.270064441862433
+tls,Timor-Leste,4352.93562,70.31,asia,coastline,3.638782243981311
+ton,Tonga,7839.22918,72,asia,coastline,3.8942733612392377
+tto,Trinidad and Tobago,33144.88032,73.4,americas,coastline,4.520416455199757
+tun,Tunisia,13135.58265,76,africa,coastline,4.118449341383053
+tur,Turkey,36992.96579,76.69,europe,coastline,4.568119150850362
+tuv,Tuvalu,6632.53597,63.58,asia,coastline,3.821679613954805
+tza,Tanzania,3924.40183,69.81,africa,coastline,3.593773469558307
+uga,Uganda,3047.99489,65.98,africa,landlocked,3.484014234568264
+ukr,Ukraine,15014.25715,73.98,europe,coastline,4.176503849779311
+ury,Uruguay,33757.56245,77.8,americas,coastline,4.528371079756537
+usa,USA,78388.58461,78.8,americas,coastline,4.894252822864947
+uzb,Uzbekistan,11127.00974,72.8,asia,landlocked,4.046378468207021
+vct,St. Vincent and the Grenadines,20092.3654,75.42,americas,coastline,4.303031067644026
+ven,Venezuela,8899.072,72.1,americas,coastline,3.949344720544652
+vnm,Vietnam,15429.33526,76.41,asia,coastline,4.188347215814757
+vut,Vanuatu,3188.80002,70.59,asia,coastline,3.5036272840802867
+wsm,Samoa,7412.51789,72.8,asia,coastline,3.869965754536758
+yem,Yemen,1721.89143,72.01,asia,coastline,3.2360057645169507
+zaf,South Africa,13889.23888,66.9,africa,coastline,4.142678447373839
+zmb,Zambia,3944.46383,61.87,africa,landlocked,3.5959879780149824
+zwe,Zimbabwe,3675.57058,66.83,africa,landlocked,3.565324766688458

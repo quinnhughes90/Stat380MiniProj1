@@ -1,0 +1,100 @@
+---
+title: "DataPrep"
+format: pdf
+author: 'Jincheng Li'
+---
+
+```{r load libraries}
+library(readr)
+library(dplyr)
+library(purrr)
+```
+
+```{r load datasets}
+cell_per_100 <- read_csv("cell_phones_per_100_people.csv")
+gap <- read_csv('gapminder_2025.csv')
+hdi <- read_csv('hdi_human_development_index.csv')
+maternal_mortality <- read_csv('maternal_mortality_ratio_who.csv')
+daily_inc <- read_csv('mincpcap_cppp (1).csv')
+engy_use_pctg <- read_csv('residential_energy_use_percent.csv')
+```
+
+```{r construct panel data}
+cell_2010 <- cell_per_100[, c('geo', '2010')]
+engy_2010 <- engy_use_pctg[, c('geo', '2010')]
+landlocked <- gap[, c('geo', 'landlocked')]
+hdi_2010 <- hdi[, c('geo', '2010')]
+mat_mort_2010 <- maternal_mortality[, c('geo', '2010')]
+daily_inc_2010 <- daily_inc[, c('geo', '2010')]
+
+
+full_2010 <- list(cell_2010, engy_2010, landlocked, hdi_2010, mat_mort_2010, daily_inc_2010) |>
+  reduce(full_join, by = "geo")
+
+clean_2010 <- full_2010 |> 
+  na.omit()
+
+# names(clean_2010)
+
+names(clean_2010) <- c('geo', 
+                       'cell_phones_per_100_ppl', 
+                       'residential_energy_use_pctg', 
+                       'landlocked',
+                       'human_development_ind', 
+                       'maternal_mortality', 
+                       'daily_income')
+
+head(clean_2010)
+nrow(clean_2010)
+glimpse(clean_2010)
+```
+
+```{r save cleaned data}
+write.csv(clean_2010, "clean_2010.csv", row.names = FALSE)
+```
+
+```{r EDA}
+pairs(clean_2010[c(
+  "cell_phones_per_100_ppl",
+  "residential_energy_use_pctg",
+  "human_development_ind",
+  "maternal_mortality",
+  "daily_income"
+)])
+```
+
+We can expect a high VIF among variables since they are all kind of intercorrelated in some way.
+
+```{r transform data}
+transformed_2010 <- transform(
+  clean_2010,
+  log_daily_income = log(daily_income),
+  log_energy = log1p(residential_energy_use_pctg),
+  log_mortality = log1p(maternal_mortality),
+  landlocked = factor(landlocked)
+)
+
+pairs(transformed_2010[c(
+  "cell_phones_per_100_ppl",
+  "log_energy",
+  "human_development_ind",
+  "log_mortality",
+  "log_daily_income"
+)])
+```
+```{r}
+income_model <- lm(
+  log_daily_income ~ cell_phones_per_100_ppl +
+    log_energy +
+    human_development_ind +
+    log_mortality +
+    landlocked,
+  data = transformed_2010
+)
+
+summary(income_model)
+
+par(mfrow = c(2, 2))
+plot(income_model)
+par(mfrow = c(1, 1))
+```
