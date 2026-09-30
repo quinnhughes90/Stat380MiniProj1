@@ -23,7 +23,7 @@ daily_inc <- read_csv('mincpcap_cppp (1).csv')
 engy_use_pctg <- read_csv('residential_energy_use_percent.csv')
 ```
 
-### Pulling Data From Year We Want
+### Pulling Data From Year We Want and Cleaning it
 
 ```{r construct panel data}
 cell_2010 <- cell_per_100[, c('geo', '2010')]
@@ -53,6 +53,7 @@ names(clean_2010) <- c('geo',
 head(clean_2010)
 nrow(clean_2010)
 glimpse(clean_2010)
+summary(clean_2010)
 ```
 
 ### Saving Data Into New File
@@ -61,7 +62,7 @@ glimpse(clean_2010)
 write.csv(clean_2010, "clean_2010.csv", row.names = FALSE)
 ```
 
-### Cleaning Data Variables
+### Displaying Graphs of Each Variable Related to One Another
 
 ```{r EDA}
 pairs(clean_2010[c(
@@ -93,12 +94,17 @@ pairs(transformed_2010[c(
   "log_mortality",
   "log_daily_income"
 )])
+
+summary(transformed_2010)
+
 ```
 
-### Making Line of Regression
+### Making Lines of Regression
+
+#### Regression of Log(Daily Income) vs Everything
 
 ```{r}
-income_model <- lm(
+income_model1 <- lm(
   log_daily_income ~ cell_phones_per_100_ppl +
     log_energy +
     human_development_ind +
@@ -107,9 +113,40 @@ income_model <- lm(
   data = transformed_2010
 )
 
-summary(income_model)
+summary(income_model1)
 
 par(mfrow = c(2, 2))
-plot(income_model)
+plot(income_model1)
+par(mfrow = c(1, 1))
+```
+
+#### Regression of Daily Income vs Landlocked and Energy
+
+```{r}
+income_model2 <- lm(
+  log_daily_income ~ log_energy +
+    landlocked,
+  data = transformed_2010
+)
+
+summary(income_model2)
+
+par(mfrow = c(2, 2))
+plot(income_model2)
+par(mfrow = c(1, 1))
+```
+
+#### Regression Daily Income vs HDI
+
+```{r}
+income_model3 <- lm(
+  log_daily_income ~ human_development_ind,
+  data = transformed_2010
+)
+
+summary(income_model3)
+
+par(mfrow = c(2, 2))
+plot(income_model3)
 par(mfrow = c(1, 1))
 ```
