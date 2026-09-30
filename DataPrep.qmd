@@ -1,14 +1,19 @@
 ---
 title: "DataPrep"
 format: pdf
-author: 'Jincheng Li'
+author: 'Jincheng Li, 
+         Mason Spikula, 
+         Quinn Hughes'
 ---
 
 ```{r load libraries}
 library(readr)
 library(dplyr)
 library(purrr)
+library(ggplot2)
 ```
+
+### Loading Datasets
 
 ```{r load datasets}
 cell_per_100 <- read_csv("cell_phones_per_100_people.csv")
@@ -18,6 +23,8 @@ maternal_mortality <- read_csv('maternal_mortality_ratio_who.csv')
 daily_inc <- read_csv('mincpcap_cppp (1).csv')
 engy_use_pctg <- read_csv('residential_energy_use_percent.csv')
 ```
+
+### Pulling Data From Year We Want and Cleaning it
 
 ```{r construct panel data}
 cell_2010 <- cell_per_100[, c('geo', '2010')]
@@ -47,11 +54,118 @@ names(clean_2010) <- c('geo',
 head(clean_2010)
 nrow(clean_2010)
 glimpse(clean_2010)
+summary(clean_2010)
 ```
+
+### Saving Data Into New File
 
 ```{r save cleaned data}
 write.csv(clean_2010, "clean_2010.csv", row.names = FALSE)
 ```
+
+### Displaying Each Variable
+
+#### Landlocked
+
+```{r}
+table(clean_2010$landlocked)
+
+ggplot(clean_2010, aes(x = landlocked)) +
+  geom_bar() +
+  labs(title = "Landlocked vs. Coastline Countries (2010)",
+       x = "Landlocked", y = "Number of Countries")
+```
+
+#### Daily Income
+
+```{r}
+ggplot(clean_2010, aes(x = daily_income)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Daily Income (2010)", x = "Daily Income", y = "Count")
+
+clean_2010 |>
+  summarise(mean   = mean(daily_income),
+            median = median(daily_income),
+            sd     = sd(daily_income),
+            min    = min(daily_income),
+            max    = max(daily_income))
+
+clean_2010 |> arrange(desc(daily_income)) |> select(geo, daily_income) |> head(5)
+clean_2010 |> arrange(daily_income) |> select(geo, daily_income) |> head(5)
+```
+
+#### Cell Phones per 100 People
+
+```{r}
+ggplot(clean_2010, aes(x = cell_phones_per_100_ppl)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Cell Phones per 100 People (2010)", x = "Cell Phones", y = "Count")
+
+clean_2010 |>
+  summarise(mean   = mean(cell_phones_per_100_ppl),
+            median = median(cell_phones_per_100_ppl),
+            sd     = sd(cell_phones_per_100_ppl),
+            min    = min(cell_phones_per_100_ppl),
+            max    = max(cell_phones_per_100_ppl))
+
+clean_2010 |> arrange(desc(cell_phones_per_100_ppl)) |> select(geo, cell_phones_per_100_ppl) |> head(5)
+clean_2010 |> arrange(cell_phones_per_100_ppl) |> select(geo, cell_phones_per_100_ppl) |> head(5)
+```
+
+#### Residential Energy Use Percentage
+
+```{r}
+ggplot(clean_2010, aes(x = residential_energy_use_pctg)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Residential Energy Use Percentage (2010)", x = "Residential Energy Use", y = "Count")
+
+clean_2010 |>
+  summarise(mean   = mean(residential_energy_use_pctg),
+            median = median(residential_energy_use_pctg),
+            sd     = sd(residential_energy_use_pctg),
+            min    = min(residential_energy_use_pctg),
+            max    = max(residential_energy_use_pctg))
+
+clean_2010 |> arrange(desc(residential_energy_use_pctg)) |> select(geo, residential_energy_use_pctg) |> head(5)
+clean_2010 |> arrange(residential_energy_use_pctg) |> select(geo, residential_energy_use_pctg) |> head(5)
+```
+
+#### Maternal Mortality
+
+```{r}
+ggplot(clean_2010, aes(x = maternal_mortality)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Maternal Mortality (2010)", x = "Maternal Deaths per 100,000 Births", y = "Count")
+
+clean_2010 |>
+  summarise(mean   = mean(maternal_mortality),
+            median = median(maternal_mortality),
+            sd     = sd(maternal_mortality),
+            min    = min(maternal_mortality),
+            max    = max(maternal_mortality))
+
+clean_2010 |> arrange(desc(maternal_mortality)) |> select(geo, maternal_mortality) |> head(5)
+clean_2010 |> arrange(maternal_mortality) |> select(geo, maternal_mortality) |> head(5)
+```
+
+#### HDI
+
+There aren't any outliers with HDI because it is a metric that takes multiple factors into account and is on a scale of 0-1
+
+```{r}
+ggplot(clean_2010, aes(x = human_development_ind)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Human Development Index (2010)", x = "HDI", y = "Count")
+
+clean_2010 |>
+  summarise(mean   = mean(human_development_ind),
+            median = median(human_development_ind),
+            sd     = sd(human_development_ind),
+            min    = min(human_development_ind),
+            max    = max(human_development_ind))
+```
+
+### Displaying Graphs of Each Variable Related to One Another
 
 ```{r EDA}
 pairs(clean_2010[c(
@@ -64,6 +178,8 @@ pairs(clean_2010[c(
 ```
 
 We can expect a high VIF among variables since they are all kind of intercorrelated in some way.
+
+### Creating Log of Data
 
 ```{r transform data}
 transformed_2010 <- transform(
@@ -81,9 +197,17 @@ pairs(transformed_2010[c(
   "log_mortality",
   "log_daily_income"
 )])
+
+summary(transformed_2010)
+
 ```
+
+### Making Lines of Regression
+
+#### Regression of Log(Daily Income) vs Everything
+
 ```{r}
-income_model <- lm(
+income_model1 <- lm(
   log_daily_income ~ cell_phones_per_100_ppl +
     log_energy +
     human_development_ind +
@@ -92,9 +216,40 @@ income_model <- lm(
   data = transformed_2010
 )
 
-summary(income_model)
+summary(income_model1)
 
 par(mfrow = c(2, 2))
-plot(income_model)
+plot(income_model1)
+par(mfrow = c(1, 1))
+```
+
+#### Regression of Daily Income vs Landlocked and Energy
+
+```{r}
+income_model2 <- lm(
+  log_daily_income ~ log_energy +
+    landlocked,
+  data = transformed_2010
+)
+
+summary(income_model2)
+
+par(mfrow = c(2, 2))
+plot(income_model2)
+par(mfrow = c(1, 1))
+```
+
+#### Regression Daily Income vs HDI
+
+```{r}
+income_model3 <- lm(
+  log_daily_income ~ human_development_ind,
+  data = transformed_2010
+)
+
+summary(income_model3)
+
+par(mfrow = c(2, 2))
+plot(income_model3)
 par(mfrow = c(1, 1))
 ```
