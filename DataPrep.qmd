@@ -1,7 +1,9 @@
 ---
 title: "DataPrep"
 format: pdf
-author: 'Jincheng Li'
+author: 'Jincheng Li, 
+         Mason Spikula, 
+         Quinn Hughes'
 ---
 
 ```{r load libraries}
@@ -9,6 +11,8 @@ library(readr)
 library(dplyr)
 library(purrr)
 ```
+
+### Loading Datasets
 
 ```{r load datasets}
 cell_per_100 <- read_csv("cell_phones_per_100_people.csv")
@@ -18,6 +22,8 @@ maternal_mortality <- read_csv('maternal_mortality_ratio_who.csv')
 daily_inc <- read_csv('mincpcap_cppp (1).csv')
 engy_use_pctg <- read_csv('residential_energy_use_percent.csv')
 ```
+
+### Pulling Data From Year We Want
 
 ```{r construct panel data}
 cell_2010 <- cell_per_100[, c('geo', '2010')]
@@ -49,9 +55,13 @@ nrow(clean_2010)
 glimpse(clean_2010)
 ```
 
+### Saving Data Into New File
+
 ```{r save cleaned data}
 write.csv(clean_2010, "clean_2010.csv", row.names = FALSE)
 ```
+
+### Cleaning Data Variables
 
 ```{r EDA}
 pairs(clean_2010[c(
@@ -64,6 +74,8 @@ pairs(clean_2010[c(
 ```
 
 We can expect a high VIF among variables since they are all kind of intercorrelated in some way.
+
+### Creating Log of Data
 
 ```{r transform data}
 transformed_2010 <- transform(
@@ -82,6 +94,9 @@ pairs(transformed_2010[c(
   "log_daily_income"
 )])
 ```
+
+### Making Line of Regression
+
 ```{r}
 income_model <- lm(
   log_daily_income ~ cell_phones_per_100_ppl +
