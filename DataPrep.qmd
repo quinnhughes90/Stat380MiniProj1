@@ -24,32 +24,46 @@ daily_inc <- read_csv('mincpcap_cppp (1).csv')
 engy_use_pctg <- read_csv('residential_energy_use_percent.csv')
 ```
 
-### Pulling Data From Year We Want and Cleaning it
+### Pulling data from year we want and Cleaning it
 
-```{r construct panel data}
-cell_2010 <- cell_per_100[, c('geo', '2010')]
-engy_2010 <- engy_use_pctg[, c('geo', '2010')]
-landlocked <- gap[, c('geo', 'landlocked')]
-hdi_2010 <- hdi[, c('geo', '2010')]
-mat_mort_2010 <- maternal_mortality[, c('geo', '2010')]
-daily_inc_2010 <- daily_inc[, c('geo', '2010')]
+We use 2010 data. Response: Daily income is quantitative and measures average income per person per day in dollars. The quantitative predictors are phones per 100 people, residential energy use as a percentage of total energy use, HDI, and maternal deaths per 100,000 live births. Income, phones, and mortality are nonnegative; Landlocked status is categorical: coastline or landlocked. 194 countries in the combined data, missing are 1 for income, 1 for subscriptions, 61 for energy, 4 for HDI, and 15 for mortality; landlocked status and country name are each missing for 1 country, geo codes are complete. Missing values overlap across countries. Removing incomplete rows = 132 countries and excludes 62.
 
+```{r construct cross-sectional data}
+cell_2010 <- cell_per_100 |>
+  select(geo, `2010`) |>
+  rename(cell_phones_per_100_ppl = `2010`)
 
-full_2010 <- list(cell_2010, engy_2010, landlocked, hdi_2010, mat_mort_2010, daily_inc_2010) |>
-  reduce(full_join, by = "geo")
+engy_2010 <- engy_use_pctg |>
+  select(geo, `2010`) |>
+  rename(residential_energy_use_pctg = `2010`)
 
-clean_2010 <- full_2010 |> 
+hdi_2010 <- hdi |>
+  select(geo, `2010`) |>
+  rename(human_development_ind = `2010`)
+
+mat_mort_2010 <- maternal_mortality |>
+  select(geo, `2010`) |>
+  rename(maternal_mortality = `2010`)
+
+daily_inc_2010 <- daily_inc |>
+  select(geo, `2010`) |>
+  rename(daily_income = `2010`)
+
+landlocked <- gap |>
+  select(geo, name, landlocked)
+
+full_2010 <- cell_2010 |>
+  full_join(engy_2010, by = "geo") |>
+  full_join(landlocked, by = "geo") |>
+  full_join(hdi_2010, by = "geo") |>
+  full_join(mat_mort_2010, by = "geo") |>
+  full_join(daily_inc_2010, by = "geo") |>
+  select(geo, name, cell_phones_per_100_ppl,
+         residential_energy_use_pctg, landlocked,
+         human_development_ind, maternal_mortality, daily_income)
+
+clean_2010 <- full_2010 |>
   na.omit()
-
-# names(clean_2010)
-
-names(clean_2010) <- c('geo', 
-                       'cell_phones_per_100_ppl', 
-                       'residential_energy_use_pctg', 
-                       'landlocked',
-                       'human_development_ind', 
-                       'maternal_mortality', 
-                       'daily_income')
 
 head(clean_2010)
 nrow(clean_2010)
@@ -60,10 +74,11 @@ summary(clean_2010)
 ### Saving Data Into New File
 
 ```{r save cleaned data}
-write.csv(clean_2010, "clean_2010.csv", row.names = FALSE)
+write_csv(clean_2010, "clean_2010.csv")
 ```
 
 ### Displaying Each Variable
+
 
 #### Landlocked
 
@@ -75,6 +90,8 @@ ggplot(clean_2010, aes(x = landlocked)) +
   labs(title = "Landlocked vs. Coastline Countries (2010)",
        x = "Landlocked", y = "Number of Countries")
 ```
+
+Of the 132, 108 (81.8%) have a coastline and 24 (18.2%) are landlocked. The bar chart shows that coastline countries  outnumber landlocked countries by a lot. 
 
 #### Daily Income
 
@@ -90,9 +107,20 @@ clean_2010 |>
             min    = min(daily_income),
             max    = max(daily_income))
 
-clean_2010 |> arrange(desc(daily_income)) |> select(geo, daily_income) |> head(5)
-clean_2010 |> arrange(daily_income) |> select(geo, daily_income) |> head(5)
+# Six countries with the lowest values
+clean_2010 |>
+  arrange(daily_income) |>
+  select(name, geo, daily_income) |>
+  head()
+
+# Six countries with the highest values (displayed in ascending order)
+clean_2010 |>
+  arrange(daily_income) |>
+  select(name, geo, daily_income) |>
+  tail()
 ```
+
+Daily income is right-skewed: the mean is 26.58 per person per day, with a median of 15.87 and a standard deviation of 24.32 in income units. Most countries have lower incomes,a smaller number of high-income countries  The Democratic Republic of the Congo has the lowest value (1.90), while Singapore (103.32) and Qatar (99.03) have the highest values. 
 
 #### Cell Phones per 100 People
 
@@ -108,9 +136,20 @@ clean_2010 |>
             min    = min(cell_phones_per_100_ppl),
             max    = max(cell_phones_per_100_ppl))
 
-clean_2010 |> arrange(desc(cell_phones_per_100_ppl)) |> select(geo, cell_phones_per_100_ppl) |> head(5)
-clean_2010 |> arrange(cell_phones_per_100_ppl) |> select(geo, cell_phones_per_100_ppl) |> head(5)
+# Six countries with the lowest values
+clean_2010 |>
+  arrange(cell_phones_per_100_ppl) |>
+  select(name, geo, cell_phones_per_100_ppl) |>
+  head()
+
+# Six countries with the highest values (displayed in ascending order)
+clean_2010 |>
+  arrange(cell_phones_per_100_ppl) |>
+  select(name, geo, cell_phones_per_100_ppl) |>
+  tail()
 ```
+
+The mean is 96.96 subscriptions per 100 people, the median is 101.64, and the standard deviation is 38.04. Myanmar has the lowest value (1.21), while Saudi Arabia has the highest (204.97); 
 
 #### Residential Energy Use Percentage
 
@@ -126,9 +165,20 @@ clean_2010 |>
             min    = min(residential_energy_use_pctg),
             max    = max(residential_energy_use_pctg))
 
-clean_2010 |> arrange(desc(residential_energy_use_pctg)) |> select(geo, residential_energy_use_pctg) |> head(5)
-clean_2010 |> arrange(residential_energy_use_pctg) |> select(geo, residential_energy_use_pctg) |> head(5)
+# Six countries with the lowest values
+clean_2010 |>
+  arrange(residential_energy_use_pctg) |>
+  select(name, geo, residential_energy_use_pctg) |>
+  head()
+
+# Six countries with the highest values (displayed in ascending order)
+clean_2010 |>
+  arrange(residential_energy_use_pctg) |>
+  select(name, geo, residential_energy_use_pctg) |>
+  tail()
 ```
+
+Has a mean of 31.76%, a median of 25.37%, and a standard deviation of 20.33 . Most countries have smaller residential shares. Turkmenistan has the lowest share (1.36%), and Ethiopia has the highest (93.82%); 
 
 #### Maternal Mortality
 
@@ -144,13 +194,22 @@ clean_2010 |>
             min    = min(maternal_mortality),
             max    = max(maternal_mortality))
 
-clean_2010 |> arrange(desc(maternal_mortality)) |> select(geo, maternal_mortality) |> head(5)
-clean_2010 |> arrange(maternal_mortality) |> select(geo, maternal_mortality) |> head(5)
+# Six countries with the lowest values
+clean_2010 |>
+  arrange(maternal_mortality) |>
+  select(name, geo, maternal_mortality) |>
+  head()
+
+# Six countries with the highest values (displayed in ascending order)
+clean_2010 |>
+  arrange(maternal_mortality) |>
+  select(name, geo, maternal_mortality) |>
+  tail()
 ```
 
-#### HDI
+Maternal mortality is strongly right-skewed: the mean is 114.92 deaths per 100,000 live births, compared with a median of 44.50 and a standard deviation of 160.82. Many countries have relatively low ratios. Estonia has the lowest ratio (2), and Sudan has the highest (730).
 
-There aren't any outliers with HDI because it is a metric that takes multiple factors into account and is on a scale of 0-1
+#### HDI
 
 ```{r}
 ggplot(clean_2010, aes(x = human_development_ind)) +
@@ -163,7 +222,21 @@ clean_2010 |>
             sd     = sd(human_development_ind),
             min    = min(human_development_ind),
             max    = max(human_development_ind))
+
+# Six countries with the lowest values
+clean_2010 |>
+  arrange(human_development_ind) |>
+  select(name, geo, human_development_ind) |>
+  head()
+
+# Six countries with the highest values (displayed in ascending order)
+clean_2010 |>
+  arrange(human_development_ind) |>
+  select(name, geo, human_development_ind) |>
+  tail()
 ```
+
+HDI has a mean of 0.736, a median of 0.751, and a standard deviation of 0.143. Values are more concentrated toward the higher end, with a tail toward lower development scores. 
 
 ### Displaying Graphs of Each Variable Related to One Another
 
@@ -177,34 +250,49 @@ pairs(clean_2010[c(
 )])
 ```
 
-We can expect a high VIF among variables since they are all kind of intercorrelated in some way.
+The bottom row of the scatterplot matrix shows daily income against each quantitative predictor. These plots describe associations among the retained countries
+
+**Cell phones and income:** Countries with more cell-phone subscriptions per 100 people have higher daily income. income varies considerably among countries with similar especially at higher rates. 
+
+**Residential energy share and income:** Higher residential energy shares are generally associated with lower daily income. The pattern is not well described by a uniform straight-line decrease across the entire range.
+
+**HDI and income:** Income generally increases with HDI. 
+
+**Maternal mortality and income:** Countries with higher maternal mortality generally have lower income. Many countries have low maternal mortality but different incomes.
+
+
+#### Daily Income by Landlocked Status
+
+```{r income by landlocked status}
+clean_2010 |>
+  group_by(landlocked) |>
+  summarize(countries = n(),
+            mean_income = mean(daily_income),
+            median_income = median(daily_income),
+            sd_income = sd(daily_income))
+
+clean_2010 |>
+  ggplot(mapping = aes(x = landlocked, y = daily_income)) +
+  geom_violin() +
+  labs(title = "Daily Income by Landlocked Status (2010)",
+       x = "Landlocked status", y = "Daily income per person")
+```
+
+Coastline countries have a higher mean daily income (27.77) and median (16.85) than landlocked countries (21.20 and 12.29), . The standard deviations are close 24.27 for coastline countries and 24.34 for landlocked countries. The violin plot shows  overlap, so landlocked status does not clearly separate countries. There are 108 coastline countries and only 24 landlocked countries in this sample. 
 
 ### Creating Log of Data
 
-```{r transform data}
-transformed_2010 <- transform(
-  clean_2010,
-  log_daily_income = log(daily_income),
-  log_energy = log1p(residential_energy_use_pctg),
-  log_mortality = log1p(maternal_mortality),
-  landlocked = factor(landlocked)
-)
 
-pairs(transformed_2010[c(
-  "cell_phones_per_100_ppl",
-  "log_energy",
-  "human_development_ind",
-  "log_mortality",
-  "log_daily_income"
-)])
-
-summary(transformed_2010)
-
-```
+All three models below predict natural-log income. For a predictor on its original scale, a one-unit increase changes predicted log income by its coefficient, holding the other predictors fixed. On the income scale, exponentiating that coefficient gives the multiplicative change in the model's back-transformed prediction. A coefficient on log energy or log mortality describes a one-unit change in the log of `1 +` the original measurement, not a one-unit change in the original measurement. The landlocked coefficient compares landlocked countries with coastline countries. We will apply these interpretations to the fitted coefficients in the model discussion; simply exponentiating a fitted log value does not automatically give the conditional arithmetic mean of income.
 
 ### Making Lines of Regression
 
-#### Regression of Log(Daily Income) vs Everything
+We fit two multiple regressions and one simple regression to the same 132 countries. Each model predicts natural-log daily income, so its residual standard error (RSE) is in log-income units, not dollars. R-squared describes the fraction of variation in log income explained by the fitted model; adjusted R-squared also accounts for the number of predictors. We use 0.05 as the cutoff when discussing p-values. An overall F-test checks whether all predictor slopes are zero; a small p-value does not prove that the model meets its assumptions.
+
+For all three models, independence is an assumption we cannot confirm from the diagnostic plots. Each row is a different country, but countries may share regional, economic, and historical conditions. We therefore interpret these results as associations in the retained countries, not causal effects, and treat the p-values cautiously when the model assumptions are imperfect.
+
+#### Model 1: Log(Daily Income) vs All Five Predictors
+
 
 ```{r}
 income_model1 <- lm(
@@ -223,7 +311,22 @@ plot(income_model1)
 par(mfrow = c(1, 1))
 ```
 
-#### Regression of Daily Income vs Landlocked and Energy
+**Interpreting the slopes.** Holding the other predictors fixed:
+
+- One additional cell-phone subscription per 100 people is associated with an increase of 0.00196 in predicted log income, or about 0.20% in the back-transformed income prediction.
+- A one dunit increase in log(1 + residential energy share) is associated with a decrease of 0.1666 in predicted log income. This is a change in the logged predictor, not a one-percentage-point increase in energy share.
+- A 0.1 increase in HDI is associated with an increase of 0.4880 in predicted log income, equivalent to about a 62.9% increase in the back-transformed prediction.
+- A oneunit increase in log(1 + maternal mortality) is associated with a decrease of 0.0573 in predicted log income, not a decrease of 0.0573 dollars.
+- Landlocked countries have predicted log income 0.2617 lower than coastline countries, equivalent to about a 23.0% lower back transformed prediction.
+
+
+**Model fit.** The model explains 84.31% of the variation in log income (adjusted R-squared = 0.8368), with an RSE of 0.3993. Ts p < 0.001,  at least one predictor slope differs from zero. Energy (p = 0.0121), HDI (p < 0.001), and landlocked status (p = 0.0045) are significant at 0.05. Cell phones (p = 0.1338) and mortality (p = 0.3246) are not significant after adjusting for the other predictors. 
+
+**LINE** The residual plot has a curved, roughly U-shaped trend, so the linearity assumption is not fully satisfied. The Q–Q plot follows the line through most of its range but not at the tails. The scale location plot shows  greater spread in the middle. Normality and equal variance are almost, and the independence concern described above still applies. The model fits much of the variation, but its residual pattern shows that it isnt perfect.
+
+
+#### Model 2: Log(Daily Income) vs Log Energy and Landlocked Status
+
 
 ```{r}
 income_model2 <- lm(
@@ -239,7 +342,16 @@ plot(income_model2)
 par(mfrow = c(1, 1))
 ```
 
-#### Regression Daily Income vs HDI
+**Interpreting the slopes.** Holding landlocked status fixed, a increase in log(1 + residential energy share) is associated with a decrease of 0.8989 in log income. landlocked countries have predicted log income 0.2969 lower than coastline countries. The intercept 5.8527 applies to a coastline country with zero residential energy share
+
+**Model fit.** The model explains 38.66% of the variation in log income (adjusted R-squared = 0.3771), with an RSE of 0.7802. Its overall F-test has p < 0.001. The energy slope is significant (p < 0.001), but the landlocked slope is not significant at 0.05 (p = 0.0943). 
+
+**Assumptions.** The residual trend goes up and then down. Most points in the Q–Q plot follow the line, but the lower tail some that done. The residual spread is uneven so equal variance is not established.
+
+
+#### Model 3: Log(Daily Income) vs HDI
+
+
 
 ```{r}
 income_model3 <- lm(
@@ -253,3 +365,41 @@ par(mfrow = c(2, 2))
 plot(income_model3)
 par(mfrow = c(1, 1))
 ```
+
+**Interpreting the slope.** A 0.1 increase in HDI is associated with an increase of 0.6255 in predicted log income, equivalent to about an 86.9% increase. The intercept is -1.7637, the predicted log income at HDI = 0, which is outside the observed HDI range and is not a meaningful comparison for these countries.
+
+**Model fit.** HDI alone explains 81.92% of the variation in log income adjusted R-squared = 0.8178), with an RSE of 0.4220. Both the HDI slope test and the overall F-test have p < 0.001. This is strong evidence of an association within this fitted model
+
+**Assumptions.** The residual trend has a shallow curve, so the relationship is  close to linear but not perfect. The Q–Q plot is close to the line in the middle and departs at both tails. The scale-location plot shows more spread in the middle and less at the high end so equal variance isnt clear. 
+
+### Comparing the Models
+
+
+| Model | Number of predictors | Adjusted R-squared | Residual standard error |
+|---|---:|---:|---:|
+| Model 1: All five predictors | 5 | 0.8368 | 0.3993 |
+| Model 2: Log energy and landlocked status | 2 | 0.3771 | 0.7802 |
+| Model 3: HDI alone | 1 | 0.8178 | 0.4220 |
+
+**We prefer Model 1 for its fit to these data.** It has the highest adjusted R-squared, and the lowest residual standard error. Model 3 is also good. HDI gives a similar fit with only one predictor, making Model 3 a solid choice when simplicity is the priority. Model 2 explains much less variation and has substantially more residual scatter, so it is the weakest of the three by these measures.
+
+The diagnostic plots keep us from treating any model as a perfect fit. Model 1 still has curvature in its residuals, and Model 3 has some curvature and uneven spread as well. Model 2 shows curvature and a particularly influential observation. We choose Model 1 for its better overall fit.
+
+### Our Question
+
+**Does the relationship between HDI and daily income look similar for landlocked and coastline countries?**
+
+
+```{r our question}
+transformed_2010 |>
+  ggplot(mapping = aes(x = human_development_ind,
+                       y = log_daily_income,
+                       color = landlocked)) +
+  geom_point() +
+  labs(title = "HDI and Daily Income by Landlocked Status (2010)",
+       x = "Human Development Index (HDI)",
+       y = "Log daily income (natural log)",
+       color = "Country type")
+```
+
+**Our answer:** Yes, the overall pattern looks similar countries with higher HDI generally have higher income in both groups. The colors overlap insead of forming two clearly separate groups. Several landlocked countries have both high HDI and high income, so being landlocked does not automatically mean a country has low income. Some landlocked countries fall below coastline countries with similar HDI, but that is not true everywhere in the plot. There are also fewer landlocked countries in the sample. The graph supports a shared positive pattern, but it does not prove that the relationships are identical or that landlocked status causes income differences.
