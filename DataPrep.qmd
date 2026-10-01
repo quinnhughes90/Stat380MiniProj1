@@ -1,6 +1,6 @@
 ---
 title: "DataPrep"
-format: pdf
+format: html
 author: 'Jincheng Li, 
          Mason Spikula, 
          Quinn Hughes'
@@ -280,10 +280,20 @@ clean_2010 |>
 
 Coastline countries have a higher mean daily income (27.77) and median (16.85) than landlocked countries (21.20 and 12.29), . The standard deviations are close 24.27 for coastline countries and 24.34 for landlocked countries. The violin plot shows  overlap, so landlocked status does not clearly separate countries. There are 108 coastline countries and only 24 landlocked countries in this sample. 
 
+
+```{r}
+transformed_2010 <- clean_2010 |>
+  mutate(
+    log_daily_income = log(daily_income),
+    log_energy       = log(1 + residential_energy_use_pctg),
+    log_mortality    = log(1 + maternal_mortality)
+  )
+```
+
 ### Creating Log of Data
 
 
-All three models below predict natural-log income. For a predictor on its original scale, a one-unit increase changes predicted log income by its coefficient, holding the other predictors fixed. On the income scale, exponentiating that coefficient gives the multiplicative change in the model's back-transformed prediction. A coefficient on log energy or log mortality describes a one-unit change in the log of `1 +` the original measurement, not a one-unit change in the original measurement. The landlocked coefficient compares landlocked countries with coastline countries. We will apply these interpretations to the fitted coefficients in the model discussion; simply exponentiating a fitted log value does not automatically give the conditional arithmetic mean of income.
+All three models below predict natural-log income. For a predictor on its original scale, a one-unit increase changes predicted log income by its coefficient, holding the other predictors fixed. On the income scale, exponentiating that coefficient gives the multiplicative change in the model's back transformed prediction. A coefficient on log energy or log mortality describes a one-unit change in the log of `1 +` the original measurement, not a one-unit change in the original measurement. The landlocked coefficient compares landlocked countries with coastline countries. We will apply these interpretations to the fitted coefficients in the model discussion; simply exponentiating a fitted log value does not automatically give the conditional arithmetic mean of income.
 
 ### Making Lines of Regression
 
